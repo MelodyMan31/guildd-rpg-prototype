@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://ct2x265ir2thq"]
 
+[ext_resource type="PackedScene" uid="uid://ki7mle1eb260" path="res://scenes/enemies/training_enemy.tscn" id="2_r4w3x"]
 [ext_resource type="PackedScene" uid="uid://cctc1ift2tvtn" path="res://scenes/player/player.tscn" id="2_syvi4"]
+[ext_resource type="Script" uid="uid://ccn6ms84pkevu" path="res://scripts/enemies/training_enemy.gd" id="3_r4w3x"]
+[ext_resource type="Script" uid="uid://i1aaxurxl04b" path="res://scripts/ui/combat_hud.gd" id="4_db73s"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_hlim7"]
 size = Vector3(20, 0.2, 20)
@@ -38,3 +41,20 @@ transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70
 
 [node name="Player" parent="." unique_id=1950447967 instance=ExtResource("2_syvi4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+
+[node name="TrainingEnemy" parent="." unique_id=1219595146 instance=ExtResource("2_r4w3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -4)
+script = ExtResource("3_r4w3x")
+move_speed = 2.2
+attack_range = 1.55
+attack_damage = 10
+attack_interval = 1.5
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=507518631]
+
+[node name="CombatHUD" type="Label" parent="CanvasLayer" unique_id=557442816]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 60.0
+offset_bottom = 43.0
+script = ExtResource("4_db73s")

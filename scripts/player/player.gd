@@ -32,6 +32,8 @@ var dodge_cooldown_left: float = 0.0
 var dodge_direction: Vector3 = Vector3.FORWARD
 
 func _ready() -> void:
+	add_to_group("player")
+	
 	# Prevent the camera from colliding with our player
 	spring_arm.add_excluded_object(get_rid())
 	

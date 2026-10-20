@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cctc1ift2tvtn"]
 
 [ext_resource type="Script" uid="uid://o6l66e6g57uu" path="res://scripts/player/player.gd" id="1_8afob"]
+[ext_resource type="Script" uid="uid://cpmpt1lw71q8u" path="res://scripts/combat/health.gd" id="2_gmlin"]
+[ext_resource type="Script" uid="uid://i1m51wovkxry" path="res://scripts/player/player_combat.gd" id="3_lvxji"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hlim7"]
 radius = 0.35
@@ -10,19 +12,34 @@ height = 1.8
 radius = 0.35
 height = 1.8
 
-[sub_resource type="BoxMesh" id="BoxMesh_dlsu6"]
-custom_aabb = AABB(0, 0.3, -0.38, 0, 0, 0)
-size = Vector3(0.18, 0.18, 0.12)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c5bkc"]
+albedo_color = Color(1, 1, 0, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5qtk"]
-albedo_color = Color(0, 1, 1, 1)
+[sub_resource type="BoxMesh" id="BoxMesh_8afob"]
+size = Vector3(0.18, 0.12, 0.65)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5fh0d"]
+albedo_color = Color(0.41368303, 0.4136831, 0.41368303, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hlim7"]
+size = Vector3(0.13, 0.8, 0.13)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dlsu6"]
+size = Vector3(1.7, 1.6, 2.1)
 
 [node name="Player" type="CharacterBody3D" unique_id=1950447967]
 collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_8afob")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1407251439]
 shape = SubResource("CapsuleShape3D_hlim7")
+
+[node name="Health" type="Node" parent="." unique_id=659534847]
+script = ExtResource("2_gmlin")
+
+[node name="Combat" type="Node" parent="." unique_id=1053259325]
+script = ExtResource("3_lvxji")
 
 [node name="Visual" type="Node3D" parent="." unique_id=1611654310]
 
@@ -30,8 +47,25 @@ shape = SubResource("CapsuleShape3D_hlim7")
 mesh = SubResource("CapsuleMesh_5fh0d")
 
 [node name="FacingMarker" type="MeshInstance3D" parent="Visual" unique_id=901971739]
-mesh = SubResource("BoxMesh_dlsu6")
-surface_material_override/0 = SubResource("StandardMaterial3D_o5qtk")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02, -0.27)
+material_override = SubResource("StandardMaterial3D_c5bkc")
+mesh = SubResource("BoxMesh_8afob")
+
+[node name="SwordPivot" type="Node3D" parent="Visual" unique_id=2118113115]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, 0.15, -0.25)
+
+[node name="Blade" type="MeshInstance3D" parent="Visual/SwordPivot" unique_id=863968848]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+material_override = SubResource("StandardMaterial3D_5fh0d")
+mesh = SubResource("BoxMesh_hlim7")
+
+[node name="AttackArea" type="Area3D" parent="Visual" unique_id=2008653213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Visual/AttackArea" unique_id=366668293]
+shape = SubResource("BoxShape3D_dlsu6")
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=918691904]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
