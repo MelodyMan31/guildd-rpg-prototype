@@ -29,6 +29,8 @@ var gravity: float = float(ProjectSettings.get_setting("physics/3d/default_gravi
 var dodge_time_left: float = 0.0
 var dodge_cooldown_left: float = 0.0
 
+var controls_locked: bool = false
+
 var dodge_direction: Vector3 = Vector3.FORWARD
 
 func _ready() -> void:
@@ -42,6 +44,9 @@ func _ready() -> void:
 
 # Mouse Camera Controls
 func _unhandled_input(event: InputEvent) -> void:
+	if controls_locked:
+		return
+	
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_ESCAPE:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -84,6 +89,19 @@ func _clamp_camera_pitch() -> void:
 
 # Player Movement
 func _physics_process(delta: float) -> void:
+	# Disable movement during conversations
+	if controls_locked:
+		velocity.x = 0.0
+		velocity.y = 0.0
+		
+		if not is_on_floor():
+			velocity.y -= gravity * delta
+		else:
+			velocity.y = -0.1
+			
+		move_and_slide()
+		return
+	
 	_update_controller_camera(delta)
 	
 	# Count down the dodge cooldown every frame

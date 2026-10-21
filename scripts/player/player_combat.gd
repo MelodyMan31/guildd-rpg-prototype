@@ -28,6 +28,10 @@ func _physics_process(delta: float) -> void:
 	if health.current_hp <= 0:
 		return
 		
+	# No attacks while a conversation is open
+	if get_parent().get("controls_locked") == true:
+		return
+		
 	recovery_left = maxf(recovery_left - delta, 0.0)
 	
 	if Input.is_action_just_pressed("light_attack"):

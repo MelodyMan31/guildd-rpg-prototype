@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GuilddRPGPrototype"
-run/main_scene="uid://ct2x265ir2thq"
+run/main_scene="uid://nicyf5j3v14y"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 

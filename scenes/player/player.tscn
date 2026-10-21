@@ -3,10 +3,14 @@
 [ext_resource type="Script" uid="uid://o6l66e6g57uu" path="res://scripts/player/player.gd" id="1_8afob"]
 [ext_resource type="Script" uid="uid://cpmpt1lw71q8u" path="res://scripts/combat/health.gd" id="2_gmlin"]
 [ext_resource type="Script" uid="uid://i1m51wovkxry" path="res://scripts/player/player_combat.gd" id="3_lvxji"]
+[ext_resource type="Script" uid="uid://esuxqeryvi6d" path="res://scripts/interactions/interaction_detector.gd" id="4_lvxji"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hlim7"]
 radius = 0.35
 height = 1.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hlim7"]
+radius = 2.2
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_5fh0d"]
 radius = 0.35
@@ -40,6 +44,14 @@ script = ExtResource("2_gmlin")
 
 [node name="Combat" type="Node" parent="." unique_id=1053259325]
 script = ExtResource("3_lvxji")
+
+[node name="InteractionDetector" type="Area3D" parent="." unique_id=175950534]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("4_lvxji")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionDetector" unique_id=1011175357]
+shape = SubResource("SphereShape3D_hlim7")
 
 [node name="Visual" type="Node3D" parent="." unique_id=1611654310]
 

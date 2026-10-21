@@ -4,7 +4,7 @@ extends Label
 
 @onready var health: HealthComponent = player.get_node("Health") as HealthComponent
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var status: String = "Ready"
 	
 	if health.current_hp <= 0:
@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 		"HP: %d / %d\n"
 		+ "Status: %s\n\n"
 		+ "Square / LMB: Light Attack\n"
-		+ "Trianlge / RMB: Heavy Attack\n"
+		+ "Triangle / RMB: Heavy Attack\n"
 		+ "L1 / Q: Guard\n"
 		+ "Circle / Space: Dodge"
 	) % [
