@@ -30,8 +30,24 @@ var dodge_time_left: float = 0.0
 var dodge_cooldown_left: float = 0.0
 
 var controls_locked: bool = false
+var sprint_requires_release: bool = false
 
 var dodge_direction: Vector3 = Vector3.FORWARD
+
+# Stop player movement during interactions
+func set_controls_locked(locked: bool) -> void:
+	controls_locked = locked
+	
+	if locked:
+		# Stop horizontal movement immediately
+		velocity.x = 0.0
+		velocity.z = 0.0
+		
+		# Cancel any active dodge
+		dodge_time_left = 0.0
+		
+		# Require sprint to be released before using it again
+		sprint_requires_release = true
 
 func _ready() -> void:
 	add_to_group("player")
@@ -89,10 +105,14 @@ func _clamp_camera_pitch() -> void:
 
 # Player Movement
 func _physics_process(delta: float) -> void:
+	# Allow sprinting again after releasing the button
+	if not Input.is_action_pressed("sprint"):
+		sprint_requires_release = false
+	
 	# Disable movement during conversations
 	if controls_locked:
 		velocity.x = 0.0
-		velocity.y = 0.0
+		velocity.z = 0.0
 		
 		if not is_on_floor():
 			velocity.y -= gravity * delta
@@ -158,7 +178,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		var current_speed: float = walk_speed
 		
-		if Input.is_action_pressed("sprint"):
+		if Input.is_action_pressed("sprint") and not sprint_requires_release:
 			current_speed = sprint_speed
 			
 		velocity.x = move_direction.x * current_speed

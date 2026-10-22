@@ -104,10 +104,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	)
 	
 	# Temporarily disable player movement
-	player.set("controls_locked", true)
+	player.set_controls_locked(true)
 	
 	get_viewport().set_input_as_handled()
 	
 # Restore Movement
 func _on_dialogue_closed() -> void:
-	player.set("controls_locked", false)
+	player.set_controls_locked(false)
